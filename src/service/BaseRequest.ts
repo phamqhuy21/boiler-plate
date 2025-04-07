@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { config } from '../config';
 
+export const ACCESS_TOKEN = 'access_token';
 const BASE_URL = config.base_url;
+const PREFIX = '/api';
 
 export default class BaseRequest {
 	baseUrl: string;
@@ -13,6 +15,11 @@ export default class BaseRequest {
 	setAuth() {
 		axios.interceptors.request.use(
 			(config) => {
+				const accessToken = localStorage.getItem(ACCESS_TOKEN);
+				if (accessToken) {
+					config.headers['Authorization'] = `Bearer ${accessToken}`;
+				}
+
 				return config;
 			},
 			(error) => {
@@ -32,37 +39,37 @@ export default class BaseRequest {
 
 	async get(path = '', params = {}): Promise<any> {
 		try {
-			return await axios.get(BASE_URL + path, {
+			return await axios.get(BASE_URL + PREFIX + path, {
 				params: params,
 			});
 		} catch (error) {
-			return error;
+			return this._errorHandler(error);
 		}
 	}
 	async post(path = '', data = {}): Promise<any> {
 		try {
-			return await axios.post(BASE_URL + path, data);
+			return await axios.post(BASE_URL + PREFIX + path, data);
 		} catch (error) {
 			return this._errorHandler(error);
 		}
 	}
 	async put(path = '', data = {}): Promise<any> {
 		try {
-			return await axios.put(BASE_URL + path, data);
+			return await axios.put(BASE_URL + PREFIX + path, data);
 		} catch (error) {
 			return this._errorHandler(error);
 		}
 	}
 	async delete(path = '', params = {}): Promise<any> {
 		try {
-			return await axios.delete(BASE_URL + path, params);
+			return await axios.delete(BASE_URL + PREFIX + path, params);
 		} catch (error) {
 			return this._errorHandler(error);
 		}
 	}
 	async patch(path = '', data = {}): Promise<any> {
 		try {
-			return await axios.patch(BASE_URL + path, data);
+			return await axios.patch(BASE_URL + PREFIX + path, data);
 		} catch (error) {
 			return this._errorHandler(error);
 		}

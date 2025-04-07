@@ -6,6 +6,8 @@ import './index.css';
 import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import { router } from './routes';
+import { ConfigProvider } from 'antd';
+import { customTheme } from './config/theme.config';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -13,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<RouterProvider router={router} />
+			<ConfigProvider theme={customTheme}>
+				<RouterProvider router={router} />
+			</ConfigProvider>
 		</Provider>
 	</React.StrictMode>
 );

@@ -1,0 +1,6 @@
+import React from 'react';
+import Ranking from '../components/Ranking';
+
+export default function RankingPage() {
+	return <Ranking />;
+}

@@ -1,0 +1,50 @@
+import { ThemeConfig, theme } from 'antd';
+
+export const customTheme: ThemeConfig = {
+	token: { colorPrimary: '#fff' },
+	// algorithm: theme.darkAlgorithm,
+	components: {
+		Button: {
+			defaultBg: '#00ABEB',
+			defaultHoverBg: '#00ABEB',
+			defaultActiveBg: '#00ABEB',
+			defaultActiveBorderColor: '#00ABEB',
+			defaultHoverBorderColor: '#00ABEB',
+			defaultBorderColor: '#00ABEB',
+			colorPrimary: '#28303F',
+			colorPrimaryActive: '#28303F',
+			colorPrimaryHover: '#28303F',
+			colorPrimaryBorder: '#00ABEB',
+			colorBorder: '#00ABEB',
+			colorText: '#fff',
+			borderRadius: 6,
+			colorBgContainerDisabled: '#00ABEB40',
+			colorTextDisabled: '#ffffff40',
+			borderColorDisabled: '#00ABEB40',
+			// algorithm: false,
+		},
+		Typography: {
+			colorText: '#ffffff',
+			colorTextHeading: '#ffffff',
+			fontSize: 14,
+			lineHeightHeading5: 1.55,
+			lineHeight: 1.85,
+			fontWeightStrong: 400,
+			fontFamily: 'SF Pro Display',
+			titleMarginTop: 0,
+			titleMarginBottom: 0,
+			marginXS: 0,
+			marginXXS: 0,
+		},
+		Drawer: {
+			colorBgElevated: '#00163300',
+			colorText: '#ffffff',
+			paddingLG: 0,
+		},
+		Carousel: {
+			dotHeight: 6,
+			dotWidth: 6,
+			dotOffset: -20,
+		},
+	},
+};
