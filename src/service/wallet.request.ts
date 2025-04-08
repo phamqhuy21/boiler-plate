@@ -6,22 +6,22 @@ const walletRequest = {
 	getWallets() {
 		return api.get('/wallet/my-wallet');
 	},
-	withdraw(body: WithdrawReq) {
+	withdraw(body: any) {
 		return api.post('/wallet/withdraw', body);
 	},
-	getCurrencies(): Promise<AxiosResponse<ResponseData<Currency[]>>> {
+	getCurrencies() {
 		return api.get('/wallet/currency');
 	},
-	getCurrencyWithdrawSetting(params?: CurrencyWithDrawSettingParams) {
+	getCurrencyWithdrawSetting(params?: any) {
 		return api.get('/wallet/currency-withdraw-setting', params);
 	},
-	getCurrencyDepositSetting(params?: CurrencyWithDrawSettingParams) {
+	getCurrencyDepositSetting(params?: any) {
 		return api.get('/wallet/currency-deposit-setting', params);
 	},
-	getTransactions(params?: TransactionParams) {
+	getTransactions(params?: any) {
 		return api.get('/wallet/transaction', params);
 	},
-	getPaymentWallet(params?: Params) {
+	getPaymentWallet(params?: any) {
 		return api.get('/wallet/payment-wallet', params);
 	},
 	paymentWalletAccounts() {

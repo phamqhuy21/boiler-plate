@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { fadeIn } from '../../../constants/css';
 import { Button, Form, Input, Modal, QRCode, Select } from 'antd';
 import { QrcodeOutlined } from '@ant-design/icons';
+import { fadeIn } from '../../../styles/animation.style';
 
 export const Wrapper = styled.div`
 	min-height: 100vh;

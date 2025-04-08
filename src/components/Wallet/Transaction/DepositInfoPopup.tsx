@@ -1,15 +1,9 @@
-import React, { useRef, useState } from 'react';
-import PopupUI from '../../UI/Popup/PopupUI';
-import styled from 'styled-components';
 import { Button } from 'antd';
-import { StyledQRCode } from './index.styled';
-import ShareIc from '../../Icons/ShareIc';
-import SaveIc from '../../Icons/SaveIc';
+import React, { useRef } from 'react';
+import styled from 'styled-components';
 import { IDeposit } from './Deposit';
-import { exportFileImage } from '../../../utils/common';
-import { LoadingOutlined } from '@ant-design/icons';
-import { toast } from 'react-toastify';
-import uploadRequest from '../../../service/upload.request';
+import { StyledQRCode } from './index.styled';
+import PopupUI from '../../UI/PopupUI';
 interface IProps {
 	open: boolean;
 	onClose: () => void;
@@ -18,92 +12,92 @@ interface IProps {
 
 const DepositInfoPopup: React.FC<IProps> = ({ open, onClose, dataSource }) => {
 	const bodyRef = useRef<HTMLDivElement | null>(null);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 
-	const isMobile = /iphone|ipad|ipod|ios|android|XiaoMi|MiuiBrowser/i.test(
-		navigator.userAgent
-	);
+	// const isMobile = /iphone|ipad|ipod|ios|android|XiaoMi|MiuiBrowser/i.test(
+	// 	navigator.userAgent
+	// );
 
-	const onSave = async () => {
-		if (!bodyRef.current) return;
-		setLoading(true);
-		try {
-			const dataUrl = await exportFileImage(bodyRef.current, {
-				width: '360px',
-			});
-			if (!dataUrl) return;
-			const blob = await fetch(dataUrl).then((res) => res.blob());
-			const file = new File(
-				[blob],
-				`${dataSource.network}_${dataSource.walletAddress}.png`,
-				{
-					type: 'image/png',
-				}
-			);
-			const tg = window.Telegram.WebApp as any;
-			if (tg && isMobile) {
-				if (Number(tg.version) < 8) {
-					toast.error(
-						'To use this feature, please update the Telegram app to the latest version.'
-					);
-					return;
-				}
-				const res = await uploadRequest.upload(file);
-				if (res.data?.data?.url)
-					tg.downloadFile({
-						url: res.data.data.url,
-						file_name: `${dataSource.network}_${dataSource.walletAddress}.png`,
-					});
-				return;
-			}
-			const url = URL.createObjectURL(file);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = file.name || 'downloaded-file';
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			URL.revokeObjectURL(url);
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setLoading(false);
-		}
-	};
+	// const onSave = async () => {
+	// 	if (!bodyRef.current) return;
+	// 	setLoading(true);
+	// 	try {
+	// 		const dataUrl = await exportFileImage(bodyRef.current, {
+	// 			width: '360px',
+	// 		});
+	// 		if (!dataUrl) return;
+	// 		const blob = await fetch(dataUrl).then((res) => res.blob());
+	// 		const file = new File(
+	// 			[blob],
+	// 			`${dataSource.network}_${dataSource.walletAddress}.png`,
+	// 			{
+	// 				type: 'image/png',
+	// 			}
+	// 		);
+	// 		const tg = window.Telegram.WebApp as any;
+	// 		if (tg && isMobile) {
+	// 			if (Number(tg.version) < 8) {
+	// 				toast.error(
+	// 					'To use this feature, please update the Telegram app to the latest version.'
+	// 				);
+	// 				return;
+	// 			}
+	// 			const res = await uploadRequest.upload(file);
+	// 			if (res.data?.data?.url)
+	// 				tg.downloadFile({
+	// 					url: res.data.data.url,
+	// 					file_name: `${dataSource.network}_${dataSource.walletAddress}.png`,
+	// 				});
+	// 			return;
+	// 		}
+	// 		const url = URL.createObjectURL(file);
+	// 		const a = document.createElement('a');
+	// 		a.href = url;
+	// 		a.download = file.name || 'downloaded-file';
+	// 		document.body.appendChild(a);
+	// 		a.click();
+	// 		document.body.removeChild(a);
+	// 		URL.revokeObjectURL(url);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
 
-	const onShare = async () => {
-		if (!bodyRef.current) return;
-		if (!isMobile || !navigator.canShare) {
-			toast.error(`Device is not supported sharing feature`);
-			return;
-		}
-		try {
-			setLoading(true);
-			const dataUrl = await exportFileImage(bodyRef.current, {
-				width: '320px',
-			});
-			if (!dataUrl) return;
-			const blob = await fetch(dataUrl).then((res) => res.blob());
-			const file = new File(
-				[blob],
-				`${dataSource.network}_${dataSource.walletAddress}.png`,
-				{
-					type: 'image/png',
-				}
-			);
-			if (navigator.canShare({ files: [file] })) {
-				await navigator.share({
-					title: 'Deposit Address',
-					text: dataSource.walletAddress,
-					files: [file],
-				});
-			}
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setLoading(false);
-		}
-	};
+	// const onShare = async () => {
+	// 	if (!bodyRef.current) return;
+	// 	if (!isMobile || !navigator.canShare) {
+	// 		toast.error(`Device is not supported sharing feature`);
+	// 		return;
+	// 	}
+	// 	try {
+	// 		setLoading(true);
+	// 		const dataUrl = await exportFileImage(bodyRef.current, {
+	// 			width: '320px',
+	// 		});
+	// 		if (!dataUrl) return;
+	// 		const blob = await fetch(dataUrl).then((res) => res.blob());
+	// 		const file = new File(
+	// 			[blob],
+	// 			`${dataSource.network}_${dataSource.walletAddress}.png`,
+	// 			{
+	// 				type: 'image/png',
+	// 			}
+	// 		);
+	// 		if (navigator.canShare({ files: [file] })) {
+	// 			await navigator.share({
+	// 				title: 'Deposit Address',
+	// 				text: dataSource.walletAddress,
+	// 				files: [file],
+	// 			});
+	// 		}
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
 
 	return (
 		<>
@@ -149,14 +143,14 @@ const DepositInfoPopup: React.FC<IProps> = ({ open, onClose, dataSource }) => {
 							)}
 						</Content>
 					</Body>
-					<Action>
+					{/* <Action>
 						<StyledButtonSecond onClick={onShare} disabled={loading}>
 							Share {loading ? <LoadingOutlined /> : <ShareIc />}
 						</StyledButtonSecond>
 						<StyledButton onClick={onSave} disabled={loading}>
 							Save {loading ? <LoadingOutlined /> : <SaveIc />}
 						</StyledButton>
-					</Action>
+					</Action> */}
 				</Wrapper>
 			</PopupUI>
 		</>

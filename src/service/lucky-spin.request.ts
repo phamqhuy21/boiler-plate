@@ -10,7 +10,7 @@ export class LuckySpinRequest extends BaseRequest {
 	async spin() {
 		return this.post('/lucky-spin/spin');
 	}
-	async getSpins(params?: SpinParams) {
+	async getSpins(params?: any) {
 		return this.get('/lucky-spin/spins', params);
 	}
 }

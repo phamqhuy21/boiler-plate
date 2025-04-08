@@ -1,7 +1,7 @@
 import BaseRequest from './BaseRequest';
 
 class ReferralRequest extends BaseRequest {
-	async getInviters(params?: Params) {
+	async getInviters(params?: any) {
 		return this.get('/referral/inviters', params);
 	}
 	async createReferralInit() {
@@ -19,7 +19,7 @@ class ReferralRequest extends BaseRequest {
 	async countActiveNetwork() {
 		return this.get('/referral/count-active-network');
 	}
-	async getListNetwork(params?: ListNetworkParams) {
+	async getListNetwork(params?: any) {
 		return this.get(`/referral/list-network`, params);
 	}
 	async getMyRankOverall() {

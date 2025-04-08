@@ -4,6 +4,7 @@ import HomePage from '../pages/home';
 import RankingPage from '../pages/ranking';
 import FriendsPage from '../pages/friends';
 import WalletPage from '../pages/wallet';
+import LoadingLayout from '../components/layouts/loading.layout';
 
 export const ROUTES = {
 	ERROR: '*',
@@ -33,7 +34,7 @@ export const ROUTES = {
 
 export const router = createBrowserRouter([
 	{
-		element: <HomeLayout />,
+		element: <LoadingLayout />,
 		children: [
 			{ path: ROUTES.HOME, element: <HomePage /> },
 			{ path: ROUTES.RANKING, element: <RankingPage /> },

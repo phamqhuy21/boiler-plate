@@ -9,7 +9,7 @@ export class UserRequest extends BaseRequest {
 	async linkWallet(walletAddress: string) {
 		return api.patch('/users/link-wallet', { walletAddress });
 	}
-	async syncData(body: DataSyncBody) {
+	async syncData(body: any) {
 		return api.post('/users/sync-data', body);
 	}
 }

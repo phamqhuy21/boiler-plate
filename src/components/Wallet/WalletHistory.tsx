@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Skeleton, Typography } from 'antd';
 import styled from 'styled-components';
 import ClockIc from '../Icons/ClockIc';
 import { formatToken, getStaleTime } from '../../utils/common';
-import { fadeIn } from '../../constants/css';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { useEffect, useState } from 'react';
@@ -10,9 +10,8 @@ import WalletTab from './Tab';
 import WalletHistoryFilter from './WalletHistoryFilter';
 import walletRequest from '../../service/wallet.request';
 import moment from 'moment';
-import { QUERY_KEYS, SearchTag, TransactionStatus } from '../../constants';
-import { useQueryClient } from '@tanstack/react-query';
 import { useAppSelector } from '../../redux/store';
+import { fadeIn } from '../../styles/animation.style';
 import InfiniteLoad from '../../hooks/useInfiniteLoading';
 
 export enum HistoryStatus {
@@ -47,154 +46,154 @@ const DEFAULT_PARAMS = {
 	searchTag: Tab.DEPOSIT,
 };
 
-export const getStatusTransaction = (status: string) => {
-	switch (status) {
-		case TransactionStatus.PENDING:
-		case TransactionStatus.PROCESSING:
-		case TransactionStatus.WITHDRAW_CHECKING:
-			return HistoryStatus.PENDING;
+// export const getStatusTransaction = (status: string) => {
+// 	switch (status) {
+// 		case TransactionStatus.PENDING:
+// 		case TransactionStatus.PROCESSING:
+// 		case TransactionStatus.WITHDRAW_CHECKING:
+// 			return HistoryStatus.PENDING;
 
-		case TransactionStatus.FAILED:
-			return HistoryStatus.FAIL;
+// 		case TransactionStatus.FAILED:
+// 			return HistoryStatus.FAIL;
 
-		case TransactionStatus.SUCCESS:
-		case TransactionStatus.TRANSFERRED:
-			return HistoryStatus.SUCCESSFUL;
+// 		case TransactionStatus.SUCCESS:
+// 		case TransactionStatus.TRANSFERRED:
+// 			return HistoryStatus.SUCCESSFUL;
 
-		default:
-			return '';
-	}
-};
+// 		default:
+// 			return '';
+// 	}
+// };
 
 export default function WalletHistory() {
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
-	const currencies = useAppSelector((state) => state.wallet.currencies);
-	const [histories, setHistories] = useState<HistoryItem[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [hasMore, setHasMore] = useState(true);
-	const [params, setParams] = useState<TransactionParams>(DEFAULT_PARAMS);
+	// const queryClient = useQueryClient();
+	// const currencies = useAppSelector((state) => state.wallet.currencies);
+	// const [histories, setHistories] = useState<HistoryItem[]>([]);
+	// const [loading, setLoading] = useState(true);
+	// const [hasMore, setHasMore] = useState(true);
+	// const [params, setParams] = useState<TransactionParams>(DEFAULT_PARAMS);
 
-	const onRerender = () => {
-		setLoading(true);
-		setHistories([]);
-		setHasMore(true);
-	};
+	// const onRerender = () => {
+	// 	setLoading(true);
+	// 	setHistories([]);
+	// 	setHasMore(true);
+	// };
 
-	const onSelectTab = (tab: Tab) => {
-		if (params.searchTag === tab) return;
-		setParams({
-			...DEFAULT_PARAMS,
-			page: 1,
-			searchTag: tab,
-		});
-		onRerender();
-	};
+	// const onSelectTab = (tab: Tab) => {
+	// 	if (params.searchTag === tab) return;
+	// 	setParams({
+	// 		...DEFAULT_PARAMS,
+	// 		page: 1,
+	// 		searchTag: tab,
+	// 	});
+	// 	onRerender();
+	// };
 
-	const getTransactions = async (transactionParams: TransactionParams) => {
-		try {
-			setLoading(true);
-			if (!hasMore) return;
-			let searchTag = transactionParams.searchTag;
-			if (searchTag === Tab.EARNED) {
-				searchTag = [
-					SearchTag.CAMPAIGN,
-					SearchTag.LUCKY_SPIN,
-					SearchTag.MISSION,
-					SearchTag.LOTTERY_PRIZE,
-				].join(',');
-			}
-			const newParams = { ...transactionParams, searchTag };
-			const res = await queryClient.fetchQuery({
-				queryKey: [QUERY_KEYS.GET_TRANSACTIONS, newParams],
-				queryFn: () => walletRequest.getTransactions(newParams),
-				staleTime: getStaleTime(30),
-			});
-			const transactions = res.data.data as Transaction[];
-			const end = transactionParams?.page && transactionParams.page * pageSize;
-			if (
-				transactions.length < pageSize ||
-				(end && end >= res.data.meta.totalRecord)
-			) {
-				setHasMore(false);
-			}
-			const convertData = transactions.map((transaction) => {
-				const currency = currencies.find(
-					(cur) => cur.symbol === transaction.symbol
-				);
-				return {
-					id: transaction.id,
-					action: transaction.metadata.action.actionName,
-					amount: transaction.amount,
-					tokenName: transaction.symbol,
-					tokenSymbol: transaction.symbol,
-					dateTime: transaction.updatedAt
-						? moment(transaction.updatedAt).format('hh:mm A, DD/MM/YYYY')
-						: '',
-					status: transaction.status
-						? getStatusTransaction(transaction.status)
-						: transaction.status,
-					showDecimals: currency?.showDecimals || 3,
-					tokenUrl: currency?.logo || '',
-				};
-			});
-			setHistories((items) => [...items, ...convertData]);
-		} catch (error) {
-			console.log(error);
-			setHasMore(false);
-		} finally {
-			setLoading(false);
-		}
-	};
+	// const getTransactions = async (transactionParams: TransactionParams) => {
+	// 	try {
+	// 		setLoading(true);
+	// 		if (!hasMore) return;
+	// 		let searchTag = transactionParams.searchTag;
+	// 		if (searchTag === Tab.EARNED) {
+	// 			searchTag = [
+	// 				SearchTag.CAMPAIGN,
+	// 				SearchTag.LUCKY_SPIN,
+	// 				SearchTag.MISSION,
+	// 				SearchTag.LOTTERY_PRIZE,
+	// 			].join(',');
+	// 		}
+	// 		const newParams = { ...transactionParams, searchTag };
+	// 		const res = await queryClient.fetchQuery({
+	// 			queryKey: [QUERY_KEYS.GET_TRANSACTIONS, newParams],
+	// 			queryFn: () => walletRequest.getTransactions(newParams),
+	// 			staleTime: getStaleTime(30),
+	// 		});
+	// 		const transactions = res.data.data as Transaction[];
+	// 		const end = transactionParams?.page && transactionParams.page * pageSize;
+	// 		if (
+	// 			transactions.length < pageSize ||
+	// 			(end && end >= res.data.meta.totalRecord)
+	// 		) {
+	// 			setHasMore(false);
+	// 		}
+	// 		const convertData = transactions.map((transaction) => {
+	// 			const currency = currencies.find(
+	// 				(cur) => cur.symbol === transaction.symbol
+	// 			);
+	// 			return {
+	// 				id: transaction.id,
+	// 				action: transaction.metadata.action.actionName,
+	// 				amount: transaction.amount,
+	// 				tokenName: transaction.symbol,
+	// 				tokenSymbol: transaction.symbol,
+	// 				dateTime: transaction.updatedAt
+	// 					? moment(transaction.updatedAt).format('hh:mm A, DD/MM/YYYY')
+	// 					: '',
+	// 				status: transaction.status
+	// 					? getStatusTransaction(transaction.status)
+	// 					: transaction.status,
+	// 				showDecimals: currency?.showDecimals || 3,
+	// 				tokenUrl: currency?.logo || '',
+	// 			};
+	// 		});
+	// 		setHistories((items) => [...items, ...convertData]);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 		setHasMore(false);
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
 
-	const onFilterConfirm = (values: {
-		status?: HistoryStatus;
-		startDate: string;
-		endDate: string;
-	}) => {
-		const newParams = { ...params, page: 1 };
-		if (values.status) {
-			let statusParam = '';
-			switch (values.status) {
-				case HistoryStatus.PENDING:
-					statusParam = `${TransactionStatus.PENDING},${TransactionStatus.PROCESSING}`;
-					break;
-				case HistoryStatus.FAIL:
-					statusParam = `${TransactionStatus.FAILED}`;
-					break;
-				case HistoryStatus.SUCCESSFUL:
-					statusParam = `${TransactionStatus.SUCCESS},${TransactionStatus.TRANSFERRED}`;
-					break;
-				default:
-					break;
-			}
-			if (statusParam) {
-				newParams.status = statusParam;
-			}
-		}
-		if (values.startDate)
-			newParams.fromDate = moment(values.startDate, 'YYYY-MM-DD')
-				.startOf('day')
-				.format('YYYY-MM-DD HH:mm');
-		if (values.endDate)
-			newParams.toDate = moment(values.endDate, 'YYYY-MM-DD')
-				.endOf('day')
-				.format('YYYY-MM-DD HH:mm');
-		setParams(newParams);
-		getTransactions(newParams);
-		onRerender();
-	};
+	// const onFilterConfirm = (values: {
+	// 	status?: HistoryStatus;
+	// 	startDate: string;
+	// 	endDate: string;
+	// }) => {
+	// 	const newParams = { ...params, page: 1 };
+	// 	if (values.status) {
+	// 		let statusParam = '';
+	// 		switch (values.status) {
+	// 			case HistoryStatus.PENDING:
+	// 				statusParam = `${TransactionStatus.PENDING},${TransactionStatus.PROCESSING}`;
+	// 				break;
+	// 			case HistoryStatus.FAIL:
+	// 				statusParam = `${TransactionStatus.FAILED}`;
+	// 				break;
+	// 			case HistoryStatus.SUCCESSFUL:
+	// 				statusParam = `${TransactionStatus.SUCCESS},${TransactionStatus.TRANSFERRED}`;
+	// 				break;
+	// 			default:
+	// 				break;
+	// 		}
+	// 		if (statusParam) {
+	// 			newParams.status = statusParam;
+	// 		}
+	// 	}
+	// 	if (values.startDate)
+	// 		newParams.fromDate = moment(values.startDate, 'YYYY-MM-DD')
+	// 			.startOf('day')
+	// 			.format('YYYY-MM-DD HH:mm');
+	// 	if (values.endDate)
+	// 		newParams.toDate = moment(values.endDate, 'YYYY-MM-DD')
+	// 			.endOf('day')
+	// 			.format('YYYY-MM-DD HH:mm');
+	// 	setParams(newParams);
+	// 	getTransactions(newParams);
+	// 	onRerender();
+	// };
 
-	const onReset = () => {
-		const newParams = { ...DEFAULT_PARAMS, searchTag: params.searchTag };
-		onRerender();
-		setParams(newParams);
-		getTransactions(newParams);
-	};
+	// const onReset = () => {
+	// 	const newParams = { ...DEFAULT_PARAMS, searchTag: params.searchTag };
+	// 	onRerender();
+	// 	setParams(newParams);
+	// 	getTransactions(newParams);
+	// };
 
-	useEffect(() => {
-		getTransactions(params);
-	}, [params.searchTag, params.page]);
+	// useEffect(() => {
+	// 	getTransactions(params);
+	// }, [params.searchTag, params.page]);
 
 	return (
 		<Wrapper>
@@ -202,29 +201,35 @@ export default function WalletHistory() {
 			<WalletTabsWrapper>
 				<WalletTab
 					tabName={'Deposit'}
-					isActive={params.searchTag === Tab.DEPOSIT}
-					select={() => onSelectTab(Tab.DEPOSIT)}
+					// isActive={params.searchTag === Tab.DEPOSIT}
+					// select={() => onSelectTab(Tab.DEPOSIT)}
+					isActive={true}
+					select={() => {}}
 				/>
 				<WalletTab
 					tabName={'Withdraw'}
-					isActive={params.searchTag === Tab.WITHDRAW}
-					select={() => onSelectTab(Tab.WITHDRAW)}
+					// isActive={params.searchTag === Tab.WITHDRAW}
+					// select={() => onSelectTab(Tab.WITHDRAW)}
+					isActive={false}
+					select={() => {}}
 				/>
 
 				<WalletTab
 					tabName={'Earned'}
-					isActive={params.searchTag === Tab.EARNED}
-					select={() => onSelectTab(Tab.EARNED)}
+					// isActive={params.searchTag === Tab.EARNED}
+					// select={() => onSelectTab(Tab.EARNED)}
+					isActive={false}
+					select={() => {}}
 				/>
 			</WalletTabsWrapper>
-			<WalletFilter>
+			{/* <WalletFilter>
 				<WalletHistoryFilter
 					onFilterConfirm={onFilterConfirm}
 					onReset={onReset}
 					tab={params.searchTag}
 				/>
-			</WalletFilter>
-			<InfiniteLoad
+			</WalletFilter> */}
+			{/* <InfiniteLoad
 				loadingComponent={<LoadingListRender />}
 				data={histories}
 				loading={loading}
@@ -276,7 +281,7 @@ export default function WalletHistory() {
 						</CardWrapper>
 					))}
 				</List>
-			</InfiniteLoad>
+			</InfiniteLoad> */}
 		</Wrapper>
 	);
 }
