@@ -1,54 +1,54 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { VERSION } from '../../constants';
 
 const LoadingLayout = () => {
+	const [progress, setProgress] = useState(0);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setProgress((prev) => {
+				if (prev >= 100) {
+					clearInterval(interval);
+					return prev;
+				}
+				return prev + 5;
+			});
+		}, 500);
+		return () => clearInterval(interval);
+	}, []);
+
+	const percentPolygon = () => {
+		if (progress <= 10) return 75;
+		if (progress <= 25) return 90;
+		if (progress <= 35) return 92;
+		if (progress <= 50) return 95;
+		if (progress <= 75) return 97;
+		if (progress < 100) return 98;
+		return 100;
+	};
+
 	return (
 		<Wrapper>
 			<Loading autoPlay muted playsInline loop>
 				<source src="/video/loading.mp4" type="video/mp4" />
 			</Loading>
-
-			{/* <Version /> */}
+			<Body>
+				<Background src="/images/loading-bg.png" alt="background" />
+				<ProgressWrapper>
+					<ProgressBar src="/images/progress-bar.png" alt="progress-bar" />
+					<ProgressFill
+						src="/images/progress.png"
+						alt="progress-fill"
+						progress={progress}
+						percentPolygon={percentPolygon()}
+					/>
+				</ProgressWrapper>
+			</Body>
 		</Wrapper>
 	);
 };
 
-const Version = () => {
-	return (
-		<VersionWrapper>
-			<VersionTag> Version {VERSION}</VersionTag>
-		</VersionWrapper>
-	);
-};
-
-const VersionTag = styled.div`
-	background: url(/images/version-tag.png);
-	background-position: center;
-	background-size: contain;
-	width: 142.86px;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	color: rgba(255, 255, 255, 0.8);
-	text-align: center;
-	font-family: Poppins;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-
-	margin: 0 auto;
-`;
-
-const VersionWrapper = styled.div`
-	position: absolute;
-	width: 100%;
-	bottom: 20px;
-	z-index: 10;
-`;
+export default LoadingLayout;
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -60,11 +60,46 @@ const Wrapper = styled.div`
 `;
 
 const Loading = styled.video`
-	position: absolute;
+	/* position: absolute; */
 	width: 100vw;
 	height: 100vh;
 	object-fit: cover;
 	object-position: center;
 `;
 
-export default LoadingLayout;
+const Body = styled.div`
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 80px;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+`;
+
+const Background = styled.img`
+	width: 90%;
+`;
+
+const ProgressWrapper = styled.div`
+	position: relative;
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+`;
+
+const ProgressBar = styled.img``;
+
+const ProgressFill = styled.img<{ progress: number; percentPolygon: number }>`
+	position: absolute;
+	left: 4px;
+	width: ${({ progress }) => `calc(${progress}% - 8px)`};
+	height: calc(100% - 8px);
+	object-fit: cover;
+	object-position: left;
+	clip-path: ${({ percentPolygon }) =>
+		`polygon(${percentPolygon}% 0%, 100% 50%, ${percentPolygon}% 100%, 0% 100%, 0 50%, 0% 0%)`};
+`;
