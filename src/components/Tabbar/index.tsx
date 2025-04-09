@@ -78,9 +78,15 @@ export default function Tabbar() {
 
 	return (
 		<Wrapper>
-			{tabs.map((tab) => (
-				<TabItem key={tab.key}>{tab.icon}</TabItem>
-			))}
+			{tabs.map((tab, index) => {
+				const isActive = index === 0;
+				return (
+					<TabItem key={tab.key} isActive={isActive}>
+						{isActive ? tab.activeIcon : tab.icon}
+						{isActive && <p>{tab.name}</p>}
+					</TabItem>
+				);
+			})}
 		</Wrapper>
 	);
 }
@@ -100,6 +106,21 @@ const Wrapper = styled.div`
 	box-sizing: border-box;
 `;
 
-const TabItem = styled.div`
+const TabItem = styled.div<{ isActive?: boolean }>`
+	display: flex;
+	align-items: center;
+	gap: 8px;
 	height: max-content;
+	padding: ${({ isActive }) => (isActive ? '4px 10px' : '4px 0px')};
+	border-radius: 12px;
+	background-color: ${({ isActive }) => (isActive ? '#1737A0' : 'transparent')};
+	p {
+		font-family: SF Pro Display;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 24px;
+		letter-spacing: 0%;
+		vertical-align: middle;
+		color: #fcd000;
+	}
 `;
