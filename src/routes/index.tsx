@@ -34,7 +34,7 @@ export const ROUTES = {
 
 export const router = createBrowserRouter([
 	{
-		element: <LoadingLayout />,
+		element: <HomeLayout />,
 		children: [
 			{ path: ROUTES.HOME, element: <HomePage /> },
 			{ path: ROUTES.RANKING, element: <RankingPage /> },

@@ -57,6 +57,8 @@ const Wrapper = styled.div`
 	position: relative;
 	overflow: hidden;
 	z-index: 1040;
+	max-width: 500px;
+	margin: 0 auto;
 `;
 
 const Loading = styled.video`
