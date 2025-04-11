@@ -3,39 +3,24 @@ import styled from 'styled-components';
 
 export default function TokenSale() {
 	return (
-		<Wrapper>
-			<TokenSalesContent>
-				<TokenSalesValue>
-					<Label>Total Mario token sales:</Label>
-					<Value>25,987,000.00</Value>
-				</TokenSalesValue>
+		<TokenSalesContent>
+			<TokenSalesValue>
+				<Label>Total Mario token sales:</Label>
+				<Value>25,987,000.00</Value>
+			</TokenSalesValue>
 
-				<ProgressWrapper>
-					<ProgressBar>
-						<ProgressContent>
-							<ProgressLabel>Until price increase</ProgressLabel>
-							<Percent>62.30%</Percent>
-						</ProgressContent>
-					</ProgressBar>
-					<CoinImg src="/images/coin.png" alt="Mario Coin" />
-				</ProgressWrapper>
-			</TokenSalesContent>
-			<TokenSalesImg src="/images/buy-now.png" alt="Token Sales" />
-		</Wrapper>
+			<ProgressWrapper>
+				<ProgressBar>
+					<ProgressContent>
+						<ProgressLabel>Until price increase</ProgressLabel>
+						<Percent>62.30%</Percent>
+					</ProgressContent>
+				</ProgressBar>
+				<CoinImg src="/images/coin.png" alt="Mario Coin" />
+			</ProgressWrapper>
+		</TokenSalesContent>
 	);
 }
-
-const Wrapper = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	width: 100%;
-`;
-
-const TokenSalesImg = styled.img`
-	width: 71px;
-	/* height: 82; */
-`;
 
 const TokenSalesContent = styled.div`
 	gap: 8px;

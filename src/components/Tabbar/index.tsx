@@ -16,8 +16,8 @@ export default function Tabbar() {
 	const tabs = [
 		{
 			key: 1,
-			name: 'Mission',
-			route: ROUTES.MISSION,
+			name: 'Earns',
+			route: ROUTES.HOME,
 			icon: <img src="/images/icons/earn-ic.svg" alt="earn-ic" />,
 			activeIcon: (
 				<img src="/images/icons/earn-active-ic.svg" alt="earn-active-ic" />
@@ -25,8 +25,8 @@ export default function Tabbar() {
 		},
 		{
 			key: 2,
-			name: 'Friends',
-			route: ROUTES.REFERRAL,
+			name: 'Ranking',
+			route: ROUTES.RANKING,
 			icon: <img src="/images/icons/ranking-ic.svg" alt="ranking-ic" />,
 			activeIcon: (
 				<img
@@ -37,8 +37,8 @@ export default function Tabbar() {
 		},
 		{
 			key: 3,
-			name: 'Home',
-			route: ROUTES.HOME,
+			name: 'Friends',
+			route: ROUTES.FRIENDS,
 			icon: <img src="/images/icons/friend-ic.svg" alt="friend-ic" />,
 			activeIcon: (
 				<img src="/images/icons/friend-active-ic.svg" alt="friend-active-ic" />
@@ -46,8 +46,8 @@ export default function Tabbar() {
 		},
 		{
 			key: 4,
-			name: 'Ranking',
-			route: ROUTES.RANKING,
+			name: 'Market',
+			route: ROUTES.MARKET,
 			icon: <img src="/images/icons/market-ic.svg" alt="market-ic" />,
 			activeIcon: (
 				<img src="/images/icons/market-active-ic.svg" alt="market-active-ic" />
@@ -78,10 +78,16 @@ export default function Tabbar() {
 
 	return (
 		<Wrapper>
-			{tabs.map((tab, index) => {
-				const isActive = index === 0;
+			{tabs.map((tab) => {
+				const isActive = tab.key === tabKey;
 				return (
-					<TabItem key={tab.key} isActive={isActive}>
+					<TabItem
+						key={tab.key}
+						isActive={isActive}
+						onClick={() => {
+							onSelectTab(tab);
+						}}
+					>
 						{isActive ? tab.activeIcon : tab.icon}
 						{isActive && <p>{tab.name}</p>}
 					</TabItem>

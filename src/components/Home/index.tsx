@@ -6,7 +6,10 @@ import ButtonUI from '../Button';
 export default function Home() {
 	return (
 		<Wrapper>
-			<TokenSale />
+			<TokenSaleWrapper>
+				<TokenSale />
+				<SaleBanner src="/images/buy-now.png" alt="Token Sales" />
+			</TokenSaleWrapper>
 
 			<Body>
 				<DecoratorWrapper>
@@ -67,7 +70,7 @@ const DecoratorWrapper = styled.div`
 `;
 
 const ClaimImage = styled.img`
-	width: 50vw;
+	width: 50%;
 `;
 
 const CoinImage = styled.img`
@@ -116,4 +119,15 @@ const ClaimButton = styled.div`
 
 const CountDownWrapper = styled.div`
 	width: 40%;
+`;
+
+const TokenSaleWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+`;
+
+const SaleBanner = styled.img`
+	width: 71px;
 `;

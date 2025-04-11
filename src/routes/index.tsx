@@ -5,6 +5,7 @@ import RankingPage from '../pages/ranking';
 import FriendsPage from '../pages/friends';
 import WalletPage from '../pages/wallet';
 import LoadingLayout from '../components/layouts/loading.layout';
+import MarketPage from '../pages/market';
 
 export const ROUTES = {
 	ERROR: '*',
@@ -30,6 +31,7 @@ export const ROUTES = {
 	DEPOSIT: '/deposit',
 	LOTTERY_RESULT_DETAIL: '/lottery/pool-detail/result',
 	SWAP: '/swap',
+	MARKET: '/market',
 };
 
 export const router = createBrowserRouter([
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
 			{ path: ROUTES.RANKING, element: <RankingPage /> },
 			{ path: ROUTES.FRIENDS, element: <FriendsPage /> },
 			{ path: ROUTES.WALLET, element: <WalletPage /> },
+			{
+				path: ROUTES.MARKET,
+				element: <MarketPage />,
+			},
 		],
 	},
 ]);
