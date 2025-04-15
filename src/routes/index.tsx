@@ -6,6 +6,7 @@ import FriendsPage from '../pages/friends';
 import WalletPage from '../pages/wallet';
 import LoadingLayout from '../components/layouts/loading.layout';
 import MarketPage from '../pages/market';
+import DepositPage from '../pages/deposit';
 
 export const ROUTES = {
 	ERROR: '*',
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.MARKET,
 				element: <MarketPage />,
+			},
+			{
+				path: ROUTES.DEPOSIT,
+				element: <DepositPage />,
 			},
 		],
 	},
