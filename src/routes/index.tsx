@@ -7,6 +7,8 @@ import WalletPage from '../pages/wallet';
 import LoadingLayout from '../components/layouts/loading.layout';
 import MarketPage from '../pages/market';
 import DepositPage from '../pages/deposit';
+import WithdrawalPage from '../pages/withdraw';
+import HistoryPage from '../pages/history';
 
 export const ROUTES = {
 	ERROR: '*',
@@ -50,6 +52,14 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.DEPOSIT,
 				element: <DepositPage />,
+			},
+			{
+				path: ROUTES.WITHDRAWAL,
+				element: <WithdrawalPage />,
+			},
+			{
+				path: ROUTES.WALLET_HISTORY,
+				element: <HistoryPage />,
 			},
 		],
 	},

@@ -68,7 +68,7 @@ const StyledDrawer = styled(Drawer)`
 `;
 
 const Wrapper = styled.div`
-	background: linear-gradient(90deg, #082954 0%, #143b6e 100%);
+	background: linear-gradient(0deg, #072041 0%, #052b5c 100%);
 	border-radius: 15px 15px 0px 0px;
 `;
 const HeaderWrapper = styled.div<{ closeable?: boolean }>`
@@ -78,14 +78,15 @@ const HeaderWrapper = styled.div<{ closeable?: boolean }>`
 	align-items: center;
 	border-radius: 15px 15px 0px 0px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0);
-	background: #07264e;
+	background: #131348;
 `;
 const Title = styled(Typography)`
-	font-family: Poppins;
+	font-family: SF Pro Display;
+	font-weight: 600;
 	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
 	line-height: 26px;
+	letter-spacing: 0%;
+	text-align: center;
 `;
 
 const BodyWrapper = styled.div`

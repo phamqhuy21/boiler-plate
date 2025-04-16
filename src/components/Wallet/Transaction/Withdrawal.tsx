@@ -3,6 +3,16 @@ import styled from 'styled-components';
 import './transaction.css';
 import { fadeIn } from '../../../styles/animation.style';
 import ButtonUI from '../../Button';
+import {
+	FieldItem,
+	LabelBlock,
+	StyledFormItem,
+	StyledSelect,
+} from './index.styled';
+import ArrowSquareIc from '../../Icons/ArrowSquareIc';
+import ScanIc from '../../Icons/ScanIc';
+import { formatToken } from '../../../utils/common';
+import { useState } from 'react';
 
 // const networks = [
 // 	{ value: Network.TON, label: 'TON Network', icon: 'TON' },
@@ -15,7 +25,7 @@ import ButtonUI from '../../Button';
 
 export default function Withdrawal() {
 	// const queryClient = useQueryClient();
-	// const [form] = Form.useForm();
+	const [form] = Form.useForm();
 	// const navigate = useNavigate();
 	// const dispatch = useAppDispatch();
 	// const user = useAppSelector((state) => state.user);
@@ -25,14 +35,14 @@ export default function Withdrawal() {
 	// const isLoadingWallet = useAppSelector(
 	// 	(state) => state.wallet.isLoadingWallet
 	// );
-	// const [showAlert, setShowAlert] = useState(false);
-	// const [showFullDesc, setShowFullDesc] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
+	const [showFullDesc, setShowFullDesc] = useState(false);
 	// const [dataSources, setDataSources] = useState<WalletResponse[]>([]);
 	// const [withdrawalSettings, setWithdrawalSettings] = useState<
 	// 	WithdrawalSetting[]
 	// >([]);
-	// const [loading, setLoading] = useState(true);
-	// const [isWithdrawing, setIsWithdrawing] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [isWithdrawing, setIsWithdrawing] = useState(false);
 
 	// const getCurrencyBySymbol = (symbol: string) => {
 	// 	return currencies.find((currency) => currency.symbol === symbol);
@@ -116,9 +126,9 @@ export default function Withdrawal() {
 	// 	return new BigNumber(amount).minus(fee).toNumber();
 	// }, [amount, fee, isInvalidAmount]);
 
-	// const isMobile = /iphone|ipad|ipod|ios|android|XiaoMi|MiuiBrowser/i.test(
-	// 	navigator.userAgent
-	// );
+	const isMobile = /iphone|ipad|ipod|ios|android|XiaoMi|MiuiBrowser/i.test(
+		navigator.userAgent
+	);
 
 	// useEffect(() => {
 	// 	if (!user?.id) return;
@@ -148,41 +158,41 @@ export default function Withdrawal() {
 	// 	}
 	// }, [wallets, currencies]);
 
-	// const onOpenScanner = () => {
-	// 	try {
-	// 		if (!isMobile) {
-	// 			setShowAlert(true);
-	// 		} else {
-	// 			(window as any)?.Telegram?.WebApp?.showScanQrPopup(
-	// 				{ text: 'Scan QR Code' },
-	// 				(data: string) => {
-	// 					form.setFieldsValue({ walletAddress: data });
-	// 					(window as any)?.Telegram?.WebApp?.closeScanQrPopup();
-	// 				}
-	// 			);
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
+	const onOpenScanner = () => {
+		try {
+			if (!isMobile) {
+				setShowAlert(true);
+			} else {
+				(window as any)?.Telegram?.WebApp?.showScanQrPopup(
+					{ text: 'Scan QR Code' },
+					(data: string) => {
+						form.setFieldsValue({ walletAddress: data });
+						(window as any)?.Telegram?.WebApp?.closeScanQrPopup();
+					}
+				);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-	// const onOpenScannerMemo = () => {
-	// 	try {
-	// 		if (!isMobile) {
-	// 			setShowAlert(true);
-	// 		} else {
-	// 			(window as any)?.Telegram?.WebApp?.showScanQrPopup(
-	// 				{ text: 'Scan QR Code' },
-	// 				(data: string) => {
-	// 					form.setFieldsValue({ memo: data });
-	// 					(window as any)?.Telegram?.WebApp?.closeScanQrPopup();
-	// 				}
-	// 			);
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
+	const onOpenScannerMemo = () => {
+		try {
+			if (!isMobile) {
+				setShowAlert(true);
+			} else {
+				(window as any)?.Telegram?.WebApp?.showScanQrPopup(
+					{ text: 'Scan QR Code' },
+					(data: string) => {
+						form.setFieldsValue({ memo: data });
+						(window as any)?.Telegram?.WebApp?.closeScanQrPopup();
+					}
+				);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	// const onMaxAmount = () => {
 	// 	form.setFieldValue('amount', withdrawToken?.availableBalance);
@@ -202,37 +212,36 @@ export default function Withdrawal() {
 	// 		console.log('error', error);
 	// 	}
 	// };
-	// const onFinishForm = async (values: any) => {
-	// 	if (isWithdrawing || !withdrawToken) {
-	// 		return;
-	// 	}
-	// 	const isValidAddress = checkValidAddress(
-	// 		values.walletAddress,
-	// 		values.network
-	// 	);
-	// 	if (!isValidAddress) {
-	// 		toast.error('Invalid address');
-	// 		return;
-	// 	}
-
-	// 	try {
-	// 		setIsWithdrawing(true);
-	// 		const res = await walletRequest.withdraw({
-	// 			...values,
-	// 			symbol: withdrawToken.symbol,
-	// 		});
-	// 		queryClient.invalidateQueries({
-	// 			queryKey: [QUERY_KEYS.GET_TRANSACTIONS],
-	// 		});
-	// 		toast.success('Withdraw successfully');
-	// 		navigate(`${ROUTES.TRANSACTION_DETAIL}?id=${res.data.data.id}`);
-	// 	} catch (error: any) {
-	// 		console.log('error', error);
-	// 		toast.error(error?.response?.data?.message || 'Withdraw failed');
-	// 	} finally {
-	// 		setIsWithdrawing(false);
-	// 	}
-	// };
+	const onFinishForm = async (values: any) => {
+		// if (isWithdrawing || !withdrawToken) {
+		// 	return;
+		// }
+		// const isValidAddress = checkValidAddress(
+		// 	values.walletAddress,
+		// 	values.network
+		// );
+		// if (!isValidAddress) {
+		// 	toast.error('Invalid address');
+		// 	return;
+		// }
+		// try {
+		// 	setIsWithdrawing(true);
+		// 	const res = await walletRequest.withdraw({
+		// 		...values,
+		// 		symbol: withdrawToken.symbol,
+		// 	});
+		// 	queryClient.invalidateQueries({
+		// 		queryKey: [QUERY_KEYS.GET_TRANSACTIONS],
+		// 	});
+		// 	toast.success('Withdraw successfully');
+		// 	navigate(`${ROUTES.TRANSACTION_DETAIL}?id=${res.data.data.id}`);
+		// } catch (error: any) {
+		// 	console.log('error', error);
+		// 	toast.error(error?.response?.data?.message || 'Withdraw failed');
+		// } finally {
+		// 	setIsWithdrawing(false);
+		// }
+	};
 
 	// const getCurrencyWithdrawSetting = async () => {
 	// 	try {
@@ -263,229 +272,238 @@ export default function Withdrawal() {
 	// 	setToken(token.toString());
 	// };
 
-	return <></>;
+	return (
+		<>
+			{/* {loading || isLoadingWallet ? (
+				<Loading />
+			) : ( */}
+			<Wrapper>
+				<FormUI
+					layout="vertical"
+					form={form}
+					onFinish={onFinishForm}
+					autoComplete="off"
+					// onFinishFailed={onFinishFailed}
+				>
+					<Title>Withdraw</Title>
 
-	// return (
-	// 	<>
-	// 		{loading || isLoadingWallet ? (
-	// 			<Loading />
-	// 		) : (
-	// 			<Wrapper>
-	// 				<FormUI
-	// 					layout="vertical"
-	// 					form={form}
-	// 					onFinish={onFinishForm}
-	// 					autoComplete="off"
-	// 					// onFinishFailed={onFinishFailed}
-	// 				>
-	// 					<Title>Withdraw</Title>
+					<FieldItem>
+						<LabelBlock>Select Token</LabelBlock>
+						<StyledFormItem name={'token'}>
+							<StyledSelect
+								popupClassName="select-network-wrapper"
+								suffixIcon={<ArrowSquareIc />}
+								// options={tokenOptions}
+								options={[]}
+								// onChange={onChangeToken}
+							/>
+						</StyledFormItem>
+					</FieldItem>
+					<SpaceFieldItemBlock />
 
-	// 					<FieldItem>
-	// 						<LabelBlock>Select Token</LabelBlock>
-	// 						<StyledFormItem name={'token'}>
-	// 							<StyledSelect
-	// 								popupClassName="select-network-wrapper"
-	// 								suffixIcon={<ArrowSquareIc />}
-	// 								// options={tokenOptions}
-	// 								options={[]}
-	// 								onChange={onChangeToken}
-	// 							/>
-	// 						</StyledFormItem>
-	// 					</FieldItem>
-	// 					<SpaceFieldItemBlock />
-
-	// 					<FormItemUI
-	// 						name="walletAddress"
-	// 						label="Address"
-	// 						rules={[
-	// 							{
-	// 								required: true,
-	// 								message: 'Please input address',
-	// 							},
-	// 						]}
-	// 					>
-	// 						<InputUI
-	// 							placeholder="Long press to paste"
-	// 							suffix={
-	// 								<ScanIconWrapper onClick={onOpenScanner}>
-	// 									<ScanIc />
-	// 								</ScanIconWrapper>
-	// 							}
-	// 						/>
-	// 					</FormItemUI>
-	// 					<FieldItem>
-	// 						<LabelBlock>Network</LabelBlock>
-	// 						<StyledFormItem
-	// 							name={'network'}
-	// 							rules={[
-	// 								{
-	// 									required: true,
-	// 									message: 'Network is required',
-	// 								},
-	// 							]}
-	// 						>
-	// 							<StyledSelect
-	// 								popupClassName="select-network-wrapper"
-	// 								suffixIcon={<ArrowSquareIc />}
-	// 								options={networkOptions}
-	// 							/>
-	// 						</StyledFormItem>
-	// 					</FieldItem>
-	// 					<SpaceFieldItemBlock />
-	// 					{withdrawalSetting?.supportMemo &&
-	// 						network === withdrawalSetting?.network && (
-	// 							<FormItemUI name="memo" label="MEMO">
-	// 								<InputUI
-	// 									placeholder="Long press to paste"
-	// 									suffix={
-	// 										<ScanIconWrapper onClick={onOpenScannerMemo}>
-	// 											<ScanIc />
-	// 										</ScanIconWrapper>
-	// 									}
-	// 								/>
-	// 							</FormItemUI>
-	// 						)}
-	// 					<FormItemUI
-	// 						name="amount"
-	// 						label="Amount"
-	// 						rules={[
-	// 							{
-	// 								required: true,
-	// 								message: 'Please input amount',
-	// 							},
-	// 							{
-	// 								pattern: /^[0-9]*[.,]?[0-9]*$/,
-	// 								message: 'Invalid amount',
-	// 							},
-	// 							{
-	// 								validator: (_, value) => {
-	// 									if (
-	// 										new BigNumber(value).isGreaterThan(
-	// 											withdrawToken?.availableBalance || 0
-	// 										)
-	// 									) {
-	// 										return Promise.reject('Insufficient balance');
-	// 									}
-	// 									if (
-	// 										new BigNumber(value).isLessThan(
-	// 											withdrawalSetting?.minAmount || 0
-	// 										)
-	// 									) {
-	// 										return Promise.reject(
-	// 											'Amount must be greater than or equal to minimum'
-	// 										);
-	// 									}
-	// 									if (
-	// 										new BigNumber(value).isGreaterThan(
-	// 											withdrawalSetting?.maxAmount || 0
-	// 										)
-	// 									) {
-	// 										return Promise.reject(
-	// 											`Amount must be less than or equal to maximum withdrawal amount: ${withdrawalSetting?.maxAmount}`
-	// 										);
-	// 									}
-	// 									return Promise.resolve();
-	// 								},
-	// 							},
-	// 						]}
-	// 					>
-	// 						<InputUI
-	// 							type="number"
-	// 							placeholder={`Minimum ${withdrawalSetting?.minAmount || 0} `}
-	// 							suffix={
-	// 								<>
-	// 									<CurrencyIcon
-	// 										src={
-	// 											getCurrencyBySymbol(withdrawToken?.symbol || token)
-	// 												?.logo || ''
-	// 										}
-	// 									/>
-	// 									<CurrencyAffixText>
-	// 										{withdrawToken?.symbol || token}
-	// 									</CurrencyAffixText>
-	// 									<AmountMaxBtn onClick={onMaxAmount}>Max</AmountMaxBtn>
-	// 								</>
-	// 							}
-	// 						/>
-	// 					</FormItemUI>
-	// 					<AvailableWrapper>
-	// 						<Typography.Text>Available</Typography.Text>
-	// 						<Typography.Text>
-	// 							{withdrawToken?.availableBalance
-	// 								? formatToken(withdrawToken.availableBalance, 10)
-	// 								: '0'}{' '}
-	// 							{withdrawToken?.symbol}
-	// 						</Typography.Text>
-	// 					</AvailableWrapper>
-	// 					<Disclaimer>Disclaimer for Using the Withdraw Function</Disclaimer>
-	// 					<DisclaimerShortDesc>
-	// 						By using the Withdraw function on PadTON, you agree to the
-	// 						following terms:
-	// 					</DisclaimerShortDesc>
-	// 					{!showFullDesc ? (
-	// 						<LearnMoreBtn onClick={() => setShowFullDesc(true)}>
-	// 							Learn more
-	// 						</LearnMoreBtn>
-	// 					) : (
-	// 						<DisclaimerShortDesc>
-	// 							<div>
-	// 								<strong>1. Transaction risks:</strong> Cryptocurrency
-	// 								transactions may involve risks due to market volatility,
-	// 								network congestion, or smart contract errors. PadTON is not
-	// 								liable for any damages resulting from these risks.
-	// 							</div>
-	// 							<div>
-	// 								<strong>2. User responsibility:</strong> You are responsible
-	// 								for providing accurate wallet information and withdrawal
-	// 								amounts. PadTON is not responsible for any errors caused by
-	// 								incorrect information input.
-	// 							</div>
-	// 							<div>
-	// 								<strong>3. Acknowledgement:</strong> By using Withdraw, you
-	// 								accept the associated risks and agree to comply with
-	// 								applicable laws.{' '}
-	// 							</div>
-	// 							<div>
-	// 								<strong>4. Terms updates:</strong> PadTON reserves the right
-	// 								to update these terms without prior notice. Continued use of
-	// 								the service after updates constitutes your acceptance of the
-	// 								new terms.
-	// 							</div>
-	// 						</DisclaimerShortDesc>
-	// 					)}
-	// 					<WithdrawalBlock>
-	// 						<LeftBlock>
-	// 							<Label>Receive amount</Label>
-	// 							<WithdrawValue>
-	// 								{formatToken(receiveAmount, 10)} {withdrawToken?.symbol}
-	// 							</WithdrawValue>
-	// 							<Label>
-	// 								Fee:{' '}
-	// 								<WithdrawFee>
-	// 									{formatToken(fee, 10)} {token}
-	// 								</WithdrawFee>
-	// 							</Label>
-	// 						</LeftBlock>
-	// 						<WithdrawBtn loading={isWithdrawing} htmlType="submit">
-	// 							Withdraw
-	// 						</WithdrawBtn>
-	// 					</WithdrawalBlock>
-	// 				</FormUI>
-	// 			</Wrapper>
-	// 		)}
-	// 		<StyledModal
-	// 			open={showAlert}
-	// 			onCancel={() => setShowAlert(false)}
-	// 			footer={[]}
-	// 			centered
-	// 		>
-	// 			<ModalContent>
-	// 				QR Codes are not supported on Desktop. <br />
-	// 				{`Please use one of Telegram's mobile apps`}
-	// 			</ModalContent>
-	// 		</StyledModal>
-	// 	</>
-	// );
+					<FormItemUI
+						name="walletAddress"
+						label="Address"
+						rules={[
+							{
+								required: true,
+								message: 'Please input address',
+							},
+						]}
+					>
+						<InputUI
+							placeholder="Long press to paste"
+							suffix={
+								<ScanIconWrapper onClick={onOpenScanner}>
+									<ScanIc />
+								</ScanIconWrapper>
+							}
+						/>
+					</FormItemUI>
+					<FieldItem>
+						<LabelBlock>Network</LabelBlock>
+						<StyledFormItem
+							name={'network'}
+							rules={[
+								{
+									required: true,
+									message: 'Network is required',
+								},
+							]}
+						>
+							<StyledSelect
+								popupClassName="select-network-wrapper"
+								suffixIcon={<ArrowSquareIc />}
+								// options={networkOptions}
+								options={[]}
+							/>
+						</StyledFormItem>
+					</FieldItem>
+					<SpaceFieldItemBlock />
+					{/* {withdrawalSetting?.supportMemo &&
+						network === withdrawalSetting?.network && (
+							<FormItemUI name="memo" label="MEMO">
+								<InputUI
+									placeholder="Long press to paste"
+									suffix={
+										<ScanIconWrapper onClick={onOpenScannerMemo}>
+											<ScanIc />
+										</ScanIconWrapper>
+									}
+								/>
+							</FormItemUI>
+						)} */}
+					<FormItemUI
+						name="amount"
+						label="Amount"
+						rules={[
+							{
+								required: true,
+								message: 'Please input amount',
+							},
+							{
+								pattern: /^[0-9]*[.,]?[0-9]*$/,
+								message: 'Invalid amount',
+							},
+							// {
+							// 	validator: (_, value) => {
+							// 		if (
+							// 			new BigNumber(value).isGreaterThan(
+							// 				withdrawToken?.availableBalance || 0
+							// 			)
+							// 		) {
+							// 			return Promise.reject('Insufficient balance');
+							// 		}
+							// 		if (
+							// 			new BigNumber(value).isLessThan(
+							// 				withdrawalSetting?.minAmount || 0
+							// 			)
+							// 		) {
+							// 			return Promise.reject(
+							// 				'Amount must be greater than or equal to minimum'
+							// 			);
+							// 		}
+							// 		if (
+							// 			new BigNumber(value).isGreaterThan(
+							// 				withdrawalSetting?.maxAmount || 0
+							// 			)
+							// 		) {
+							// 			return Promise.reject(
+							// 				`Amount must be less than or equal to maximum withdrawal amount: ${withdrawalSetting?.maxAmount}`
+							// 			);
+							// 		}
+							// 		return Promise.resolve();
+							// 	},
+							// },
+						]}
+					>
+						<InputUI
+							type="number"
+							// placeholder={`Minimum ${withdrawalSetting?.minAmount || 0} `}
+							placeholder={`Minimum 0`}
+							// suffix={
+							// 	<>
+							// 		<CurrencyIcon
+							// 			src={
+							// 				getCurrencyBySymbol(withdrawToken?.symbol || token)
+							// 					?.logo || ''
+							// 			}
+							// 		/>
+							// 		<CurrencyAffixText>
+							// 			{withdrawToken?.symbol || token}
+							// 		</CurrencyAffixText>
+							// 		<AmountMaxBtn onClick={onMaxAmount}>Max</AmountMaxBtn>
+							// 	</>
+							// }
+						/>
+					</FormItemUI>
+					<AvailableWrapper>
+						<Typography.Text>Available</Typography.Text>
+						<Typography.Text>
+							{/* {withdrawToken?.availableBalance
+								? formatToken(withdrawToken.availableBalance, 10)
+								: '0'}{' '}
+							{withdrawToken?.symbol} */}
+						</Typography.Text>
+					</AvailableWrapper>
+					<Disclaimer>Disclaimer for Using the Withdraw Function</Disclaimer>
+					<DisclaimerShortDesc>
+						By using the Withdraw function on PadTON, you agree to the following
+						terms:
+					</DisclaimerShortDesc>
+					{!showFullDesc ? (
+						<LearnMoreBtn onClick={() => setShowFullDesc(true)}>
+							Learn more
+						</LearnMoreBtn>
+					) : (
+						<DisclaimerShortDesc>
+							<div>
+								<strong>1. Transaction risks:</strong> Cryptocurrency
+								transactions may involve risks due to market volatility, network
+								congestion, or smart contract errors. PadTON is not liable for
+								any damages resulting from these risks.
+							</div>
+							<div>
+								<strong>2. User responsibility:</strong> You are responsible for
+								providing accurate wallet information and withdrawal amounts.
+								PadTON is not responsible for any errors caused by incorrect
+								information input.
+							</div>
+							<div>
+								<strong>3. Acknowledgement:</strong> By using Withdraw, you
+								accept the associated risks and agree to comply with applicable
+								laws.{' '}
+							</div>
+							<div>
+								<strong>4. Terms updates:</strong> PadTON reserves the right to
+								update these terms without prior notice. Continued use of the
+								service after updates constitutes your acceptance of the new
+								terms.
+							</div>
+						</DisclaimerShortDesc>
+					)}
+					<WithdrawalBlock>
+						<LeftBlock>
+							<Label>Receive amount</Label>
+							<WithdrawValue>
+								{/* {formatToken(receiveAmount, 10)} {withdrawToken?.symbol} */}
+								{formatToken(0.041232, 10)} {'MARIO'}
+							</WithdrawValue>
+							<Label>
+								Fee:{' '}
+								<WithdrawFee>
+									{/* {formatToken(fee, 10)} {token} */}
+									{formatToken(0.006, 10)} {'mario'}
+								</WithdrawFee>
+							</Label>
+						</LeftBlock>
+						<WithdrawBtn
+							// loading={isWithdrawing}
+							// htmlType="submit"
+							type="submit"
+							radius="8px"
+						>
+							<p>Withdraw</p>
+						</WithdrawBtn>
+					</WithdrawalBlock>
+				</FormUI>
+			</Wrapper>
+			{/* )} */}
+			{/* <StyledModal
+				// open={showAlert}
+				// onCancel={() => setShowAlert(false)}
+				open={true}
+				// onCancel={() => setShowAlert(false)}
+				footer={[]}
+				centered
+			>
+				<ModalContent>
+					QR Codes are not supported on Desktop. <br />
+					{`Please use one of Telegram's mobile apps`}
+				</ModalContent>
+			</StyledModal> */}
+		</>
+	);
 }
 
 const SpaceFieldItemBlock = styled.div`
@@ -494,21 +512,19 @@ const SpaceFieldItemBlock = styled.div`
 
 const LearnMoreBtn = styled.button`
 	display: flex;
-	padding: 6px 0px;
+	padding: 8px 10px;
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
 	border-radius: 5px;
 	border: 0.6px solid #fec424;
-	height: 28px;
-	width: 88px;
 	box-sizing: border-box;
 	background: transparent;
 
 	color: #fec424;
 	text-align: center;
-	font-family: Poppins;
-	font-size: 12px;
+	font-family: SF Pro Display;
+	font-size: 14px;
 	font-weight: 400;
 	line-height: 16px;
 
@@ -517,8 +533,8 @@ const LearnMoreBtn = styled.button`
 
 const DisclaimerShortDesc = styled.div`
 	color: #fff;
-	font-family: Poppins;
-	font-size: 12px;
+	font-family: SF Pro Display;
+	font-size: 14px;
 	font-weight: 400;
 	line-height: 16px;
 	margin-top: 6px;
@@ -534,7 +550,7 @@ const DisclaimerShortDesc = styled.div`
 const Disclaimer = styled.div`
 	margin-top: 24px;
 	color: #3998ff;
-	font-family: Poppins;
+	font-family: SF Pro Display;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 20px;
@@ -549,8 +565,8 @@ const StyledModal = styled(Modal)`
 `;
 const ModalContent = styled.div`
 	color: #fff;
-	font-size: 12px;
-	font-family: Poppins;
+	font-size: 14px;
+	font-family: SF Pro Display;
 	text-align: center;
 	padding: 0 16px;
 `;
@@ -558,10 +574,10 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
-	background-image: url('/images/layout/light.png');
+	/* background-image: url('/images/layout/light.png');
 	background-size: 100% auto;
 	background-repeat: no-repeat;
-	background-position: center -65px;
+	background-position: center -65px; */
 	animation: ${fadeIn} 0.5s ease;
 `;
 const Title = styled(Typography)`
@@ -570,7 +586,7 @@ const Title = styled(Typography)`
 	text-align: center;
 `;
 const FormUI = styled(Form)`
-	padding: 16px 16px 116px 16px;
+	padding: 16px 0px 116px 0px;
 `;
 const FormItemUI = styled(Form.Item)`
 	margin-bottom: 12px;
@@ -581,8 +597,8 @@ const FormItemUI = styled(Form.Item)`
 	}
 	.ant-form-item-explain-error {
 		color: #ff4d4f;
-		font-family: Poppins;
-		font-size: 12px;
+		font-family: SF Pro Display;
+		font-size: 14px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 18px; /* 150% */
@@ -600,11 +616,8 @@ const FormItemUI = styled(Form.Item)`
 `;
 const InputUI = styled(Input)`
 	padding: 10px 12px;
-	background: var(
-		--Button-Linear,
-		linear-gradient(90deg, #082954 0%, #143b6e 100%)
-	) !important;
-	border: none;
+	background: #1b1b36 !important;
+	border: 1px solid rgba(255, 255, 255, 0.2);
 	color: #fff;
 	font-family: Poppins !important;
 	font-size: 14px;
@@ -626,8 +639,8 @@ const ScanIconWrapper = styled.span`
 const AmountMaxBtn = styled.span`
 	color: var(--Web-White, var(--Native-text_color, #fff)) !important;
 	text-align: center;
-	font-family: Poppins;
-	font-size: 12px;
+	font-family: SF Pro Display;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: 26px; /* 216.667% */
@@ -718,7 +731,7 @@ const WithdrawalBlock = styled.div`
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background: #0c2340;
+	background: linear-gradient(0deg, #072041 0%, #052b5c 100%);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -730,15 +743,17 @@ const WithdrawalBlock = styled.div`
 
 const Label = styled.div`
 	color: #9e9e9e;
-	font-family: Poppins;
-	font-size: 12px;
+	font-family: SF Pro Display;
 	font-weight: 400;
+	font-size: 12px;
 	line-height: 20px;
+	letter-spacing: 0%;
+	vertical-align: middle;
 `;
 
 const WithdrawValue = styled.div`
 	color: #fec424;
-	font-family: Poppins;
+	font-family: SF Pro Display;
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 20px;

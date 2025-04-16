@@ -203,9 +203,10 @@ const StyledButtonSecond = styled(StyledButton)`
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 24px;
 	align-items: center;
 	justify-content: center;
+	padding-top: 24px;
 `;
 
 const Body = styled.div`
@@ -214,10 +215,6 @@ const Body = styled.div`
 	flex-direction: column;
 	gap: 16px;
 	width: 100%;
-	background: var(
-		--Button-Linear,
-		linear-gradient(90deg, #082954 0%, #143b6e 100%)
-	);
 `;
 
 const Action = styled.div`
@@ -241,20 +238,24 @@ const FieldItem = styled.div`
 `;
 const FieldItemLabel = styled.div`
 	color: #b4b4b4;
-	font-family: Poppins;
-	font-size: 14px;
-	font-style: normal;
+	font-family: SF Pro Display;
 	font-weight: 400;
-	line-height: 18px; /* 128.571% */
+	font-size: 14px;
+	line-height: 18px;
+	letter-spacing: 0%;
+	vertical-align: middle;
 `;
 const FieldItemValue = styled.div`
 	color: #fff;
 	text-align: right;
-	font-family: Poppins;
-	font-size: 14px;
-	font-style: normal;
+	font-family: SF Pro Display;
 	font-weight: 400;
-	line-height: 18px; /* 128.571% */
+	font-size: 14px;
+	line-height: 18px;
+	letter-spacing: 0%;
+	text-align: right;
+	vertical-align: middle;
+
 	max-width: 178px;
 
 	word-wrap: break-word;

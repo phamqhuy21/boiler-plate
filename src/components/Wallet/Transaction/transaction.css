@@ -2,16 +2,14 @@
 	padding: 0px;
 }
 .select-network-wrapper .ant-select-item-option {
-	background: var(
-		--Button-Linear,
-		linear-gradient(90deg, #082954 0%, #143b6e 100%)
-	) !important;
+	background: #1B1B36 !important;
 	padding: 10px 12px;
 	color: #fff !important;
 	/* backdrop-filter: blur(13px); */
 }
 .select-network-wrapper .rc-virtual-list {
-	background: linear-gradient(90deg, #082954 0%, #143b6e 100%) !important;
+	background: #1B1B36 !important;
+
 }
 
 .select-network-wrapper .ant-select-item-option-disabled {
@@ -19,7 +17,8 @@
 }
 
 .select-network-wrapper .ant-select-item-empty {
-	background: linear-gradient(90deg, #082954 0%, #143b6e 100%) !important;
+	background: #1B1B36 !important;
+
 }
 
 .select-network-wrapper .ant-empty-description {

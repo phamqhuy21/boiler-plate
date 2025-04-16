@@ -4,7 +4,7 @@ import { QrcodeOutlined } from '@ant-design/icons';
 import { fadeIn } from '../../../styles/animation.style';
 
 export const Wrapper = styled.div`
-	min-height: 100vh;
+	/* min-height: 100vh; */
 	color: #fff;
 	background-image: url('/images/layout/light.png');
 	background-size: 100% auto;
@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 	background-position: center -65px;
 	animation: ${fadeIn} 0.5s ease;
 	box-sizing: border-box;
-	padding: 16px;
+	padding: 16px 0;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
@@ -61,18 +61,13 @@ export const StyledSelect = styled(Select)`
 	height: 46px;
 	color: #fff !important;
 	.rc-virtual-list {
-		background: var(
-			--Button-Linear,
-			linear-gradient(90deg, #082954 0%, #143b6e 100%)
-		) !important;
+		background: #1b1b36 !important;
+		border: 1px solid rgba(255, 255, 255, 0.2) !important;
 	}
 	.ant-select-selector {
-		background: var(
-			--Button-Linear,
-			linear-gradient(90deg, #082954 0%, #143b6e 100%)
-		) !important;
+		background: #1b1b36 !important;
+		border: 1px solid rgba(255, 255, 255, 0.2) !important;
 		border-radius: 10px;
-		border: none !important;
 		backdrop-filter: blur(13px);
 		padding: 10px 12px !important;
 		height: 46px !important;
@@ -81,7 +76,7 @@ export const StyledSelect = styled(Select)`
 	}
 	.ant-select-selection-placeholder {
 		color: rgba(255, 255, 255, 0.6);
-		font-family: Poppins !important;
+		font-family: SF Pro Display !important;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
@@ -94,7 +89,7 @@ export const StyledSelect = styled(Select)`
 		color: #fff !important;
 		.ant-typography {
 			color: #fff;
-			font-family: Poppins !important;
+			font-family: SF Pro Display !important;
 			font-size: 14px;
 			font-style: normal;
 			font-weight: 500 !important;
@@ -108,11 +103,13 @@ export const StyledSelect = styled(Select)`
 
 export const LabelBlock = styled.div<{ required?: boolean }>`
 	color: var(--Native-text_color, #fff);
-	font-family: Poppins;
-	font-size: 14px;
-	font-style: normal;
+	font-family: SF Pro Display;
 	font-weight: 400;
+	font-size: 14px;
 	line-height: 20px;
+	letter-spacing: 0%;
+	vertical-align: middle;
+
 	&::before {
 		content: ${(props) => (props.required ? '* ' : '')};
 		color: #ff4d4f;
@@ -121,20 +118,17 @@ export const LabelBlock = styled.div<{ required?: boolean }>`
 
 export const StyledInput = styled(Input)`
 	padding: 10px 12px;
-	background: var(
-		--Button-Linear,
-		linear-gradient(90deg, #082954 0%, #143b6e 100%)
-	) !important;
+	background: #1b1b36 !important;
 	border: none;
 	color: #fff;
-	font-family: Poppins !important;
+	font-family: SF Pro Display !important;
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 500 !important;
 	line-height: 26px !important; /* 185.714% */
 	::placeholder {
 		color: rgba(255, 255, 255, 0.6) !important;
-		font-family: Poppins !important;
+		font-family: SF Pro Display !important;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
@@ -154,8 +148,8 @@ export const FieldItem = styled.div`
 
 export const FieldItemButton = styled.div`
 	width: 100%;
-	max-width: 306px;
-	margin: 0 auto;
+	/* max-width: 306px;
+	margin: 0 auto; */
 	margin-top: 10px;
 `;
 
